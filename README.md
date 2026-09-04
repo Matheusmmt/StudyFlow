@@ -2,7 +2,7 @@
 
 **StudyFlow** é um aplicativo Android nativo desenvolvido em **Kotlin** com **Jetpack Compose**, criado para ajudar estudantes a organizarem suas disciplinas, anotações, faltas, lembretes de estudo, progresso acadêmico e perfil de estudante em um único lugar.
 
-O aplicativo oferece uma experiência moderna, intuitiva e fluida com suporte a tema claro/escuro, **ícone personalizado (Launcher Icon)** e persistência de dados local e remota.
+O aplicativo oferece uma experiência moderna, intuitiva e fluida com suporte a tema claro/escuro e persistência de dados local e remota.
 
 ---
 
@@ -30,7 +30,7 @@ O projeto é estruturado na arquitetura **MVVM**, utilizando **Room Database**, 
 O usuário possui uma tela de perfil dedicada onde pode personalizar suas informações acadêmicas:
 - **Nome do Estudante**;
 - **Matrícula**;
-- **Semestre Atual** (ex: "2026.1").
+- **Semestre Atual**
 
 Essas preferências são gravadas de forma assíncrona usando **Preferences DataStore**, garantindo persistência leve e reativa sem bloquear a UI.
 
@@ -45,9 +45,9 @@ A lista principal de disciplinas e as consultas no banco de dados (**Room**) sã
 O acompanhamento de progresso é calculado automaticamente pelo app. Ao cadastrar uma disciplina, o usuário informa:
 - **Total de Aulas Planejadas**;
 - **Data de Início das Aulas**;
-- **Dias da Semana** (ex: SEG, QUA, SEX).
+- **Dias da Semana**.
 
-Com base na data atual, o sistema calcula quantas aulas já deveriam ter ocorrido até hoje e gera a porcentagem exata de progresso (exibida na barra do `LinearProgressIndicator`).
+Com base na data atual, o sistema calcula quantas aulas já deveriam ter ocorrido até hoje e gera a porcentagem de progresso.
 
 ---
 
@@ -85,7 +85,6 @@ Aba dedicada para monitorar o limite de frequência:
 
 ### 🌗 Tema Claro/Escuro & Ícone Personalizado
 - **Suporte a Tema**: Adapta-se automaticamente ao modo claro ou escuro configurado no dispositivo Android;
-- **Ícone do App (Launcher Icon)**: Design exclusivo e refinado (`nova_logo`), proporcionando uma identidade visual marcante na tela inicial do celular.
 
 ---
 
