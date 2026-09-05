@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AbsenceDao {
     @Query("SELECT * FROM faltas WHERE disciplinaId = :idDisciplina ORDER BY data DESC")
+    fun observarPorDisciplina(idDisciplina: Long): Flow<List<Absence>>
+
+    @Query("SELECT * FROM faltas WHERE disciplinaId = :idDisciplina ORDER BY data DESC")
     fun listarPorDisciplina(idDisciplina: Long): Flow<List<Absence>>
 
     @Query("SELECT COUNT(*) FROM faltas WHERE disciplinaId = :idDisciplina")

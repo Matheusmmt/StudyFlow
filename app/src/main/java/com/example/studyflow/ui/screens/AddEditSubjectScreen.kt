@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.studyflow.data.model.Subject
-import com.example.studyflow.ui.components.IconeDisciplina
 import com.example.studyflow.ui.components.SeletorData
 import com.example.studyflow.ui.components.formatarData
 

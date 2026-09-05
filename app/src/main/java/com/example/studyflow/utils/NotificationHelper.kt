@@ -22,10 +22,13 @@ object NotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val canal = NotificationChannel(
                 CANAL_LEMBRETES,
-                "Lembretes de estudo",
+                "Lembretes de Estudo",
                 NotificationManager.IMPORTANCE_HIGH
-            ).apply { description = "Avisos de estudo e revisões das disciplinas" }
-            context.getSystemService(NotificationManager::class.java)?.createNotificationChannel(canal)
+            ).apply {
+                description = "Notificações para lembretes de aula e tarefas de estudo"
+            }
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+            manager?.createNotificationChannel(canal)
         }
     }
 

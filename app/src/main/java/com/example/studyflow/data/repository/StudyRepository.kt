@@ -15,6 +15,7 @@ class StudyRepository(context: Context) {
     private val noteDao = db.noteDao()
     private val absenceDao = db.absenceDao()
     private val reminderDao = db.reminderDao()
+    private val arquivoDao = db.arquivoDao()
     private val perfilDataStore = PerfilDataStore(context)
     private val api = ApiClient.service
 
@@ -37,10 +38,15 @@ class StudyRepository(context: Context) {
         if (s.id == 0L) subjectDao.inserir(s) else { subjectDao.atualizar(s); s.id }
     suspend fun deletarDisciplina(s: Subject) = subjectDao.deletar(s)
 
-    // ---------- Room: anotações e arquivos ----------
+    // ---------- Room: anotações ----------
     fun anotacoes(disciplinaId: Long): Flow<List<Note>> = noteDao.observarPorDisciplina(disciplinaId)
     suspend fun salvarAnotacao(n: Note) = if (n.id == 0L) noteDao.inserir(n) else { noteDao.atualizar(n); n.id }
     suspend fun deletarAnotacao(n: Note) = noteDao.deletar(n)
+
+    // ---------- Room: arquivos/anexos ----------
+    fun arquivos(disciplinaId: Long): Flow<List<ArquivoEntity>> = arquivoDao.observarPorDisciplina(disciplinaId)
+    suspend fun salvarArquivo(a: ArquivoEntity): Long = arquivoDao.inserir(a)
+    suspend fun deletarArquivo(a: ArquivoEntity) = arquivoDao.deletar(a)
 
     // ---------- Room: faltas ----------
     fun faltas(disciplinaId: Long): Flow<List<Absence>> = absenceDao.observarPorDisciplina(disciplinaId)

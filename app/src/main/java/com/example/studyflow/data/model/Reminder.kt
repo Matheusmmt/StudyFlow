@@ -18,6 +18,8 @@ data class Reminder(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val disciplinaId: Long,
     val titulo: String,
-    val dataHora: Long, // timestamp completo
-    val concluido: Boolean = false
+    val dataHora: Long,
+    val concluido: Boolean = false,
+    val descricao: String? = null,
+    val ativo: Boolean = true
 )

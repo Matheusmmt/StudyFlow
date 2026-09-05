@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.studyflow.ui.components.CartaoSuperficie
 import com.example.studyflow.ui.viewmodel.PerfilViewModel
 
 /**
@@ -219,6 +218,26 @@ fun TelaPerfil(
                     Text("Cancelar")
                 }
             }
+        )
+    }
+}
+
+/** Cartão base com fundo escuro Surface (#151528) e cantos arredondados. */
+@Composable
+private fun CartaoSuperficie(
+    modifier: Modifier = Modifier,
+    conteudo: @Composable ColumnScope.() -> Unit
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            content = conteudo
         )
     }
 }

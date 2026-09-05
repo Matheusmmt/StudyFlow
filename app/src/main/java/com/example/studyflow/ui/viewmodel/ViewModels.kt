@@ -47,13 +47,15 @@ class SubjectListViewModel(app: Application) : AndroidViewModel(app) {
     fun disciplina(id: Long) = repo.disciplina(id)
 }
 
-/** Detalhe: anotações/arquivos, faltas e lembretes de uma disciplina. */
+/** Detalhe: anotações, arquivos, faltas e lembretes de uma disciplina. */
 class SubjectDetailViewModel(app: Application, private val disciplinaId: Long) : AndroidViewModel(app) {
     private val repo = StudyRepository(app)
 
     val disciplina = repo.disciplina(disciplinaId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val anotacoes = repo.anotacoes(disciplinaId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val arquivos = repo.arquivos(disciplinaId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val faltas = repo.faltas(disciplinaId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -62,6 +64,9 @@ class SubjectDetailViewModel(app: Application, private val disciplinaId: Long) :
 
     fun salvarAnotacao(n: Note) = viewModelScope.launch { repo.salvarAnotacao(n.copy(disciplinaId = disciplinaId)) }
     fun deletarAnotacao(n: Note) = viewModelScope.launch { repo.deletarAnotacao(n) }
+
+    fun salvarArquivo(a: ArquivoEntity) = viewModelScope.launch { repo.salvarArquivo(a.copy(disciplinaId = disciplinaId)) }
+    fun deletarArquivo(a: ArquivoEntity) = viewModelScope.launch { repo.deletarArquivo(a) }
 
     fun registrarFalta(data: Long, justificada: Boolean) = viewModelScope.launch {
         repo.registrarFalta(Absence(
@@ -99,8 +104,6 @@ class SubjectDetailViewModel(app: Application, private val disciplinaId: Long) :
         NotificationHelper.cancelarLembrete(getApplication(), r.id)
         repo.deletarLembrete(r)
     }
-
-
 
     class Factory(private val app: Application, private val id: Long) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")

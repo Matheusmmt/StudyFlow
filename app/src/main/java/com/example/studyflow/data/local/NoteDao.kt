@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM anotacoes WHERE disciplinaId = :idDisciplina ORDER BY criadoEm DESC")
+    fun observarPorDisciplina(idDisciplina: Long): Flow<List<Note>>
+
+    @Query("SELECT * FROM anotacoes WHERE disciplinaId = :idDisciplina ORDER BY criadoEm DESC")
     fun listarPorDisciplina(idDisciplina: Long): Flow<List<Note>>
 
     @Insert suspend fun inserir(nota: Note): Long

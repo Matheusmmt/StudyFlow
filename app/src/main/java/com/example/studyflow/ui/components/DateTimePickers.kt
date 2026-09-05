@@ -5,6 +5,22 @@ import androidx.compose.runtime.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+fun normalizarDataUtcParaLocal(utcMillis: Long): Long {
+    val calUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+        timeInMillis = utcMillis
+    }
+    val ano = calUtc[Calendar.YEAR]
+    val mes = calUtc[Calendar.MONTH]
+    val dia = calUtc[Calendar.DAY_OF_MONTH]
+
+    val calLocal = Calendar.getInstance().apply {
+        clear()
+        set(ano, mes, dia, 0, 0, 0)
+    }
+    return calLocal.timeInMillis
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SeletorData(aoSelecionar: (Long) -> Unit, aoFechar: () -> Unit) {
@@ -13,7 +29,9 @@ fun SeletorData(aoSelecionar: (Long) -> Unit, aoFechar: () -> Unit) {
         onDismissRequest = aoFechar,
         confirmButton = {
             TextButton(onClick = {
-                estado.selectedDateMillis?.let(aoSelecionar)
+                estado.selectedDateMillis?.let { utcMs ->
+                    aoSelecionar(normalizarDataUtcParaLocal(utcMs))
+                }
                 aoFechar()
             }) { Text("OK") }
         },
@@ -26,8 +44,8 @@ fun SeletorData(aoSelecionar: (Long) -> Unit, aoFechar: () -> Unit) {
 fun SeletorHora(aoSelecionar: (Int, Int) -> Unit, aoFechar: () -> Unit) {
     val agora = Calendar.getInstance()
     val estado = rememberTimePickerState(
-        initialHour = agora.get(Calendar.HOUR_OF_DAY),
-        initialMinute = agora.get(Calendar.MINUTE),
+        initialHour = agora[Calendar.HOUR_OF_DAY],
+        initialMinute = agora[Calendar.MINUTE],
         is24Hour = true
     )
     AlertDialog(
@@ -41,6 +59,7 @@ fun SeletorHora(aoSelecionar: (Int, Int) -> Unit, aoFechar: () -> Unit) {
 }
 
 fun formatarData(ts: Long): String =
-    SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(Date(ts))
+    SimpleDateFormat("dd/MM/yyyy", Locale.forLanguageTag("pt-BR")).format(Date(ts))
+
 fun formatarDataHora(ts: Long): String =
-    SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale("pt", "BR")).format(Date(ts))
+    SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.forLanguageTag("pt-BR")).format(Date(ts))

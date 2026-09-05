@@ -7,7 +7,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ReminderDao {
     @Query("SELECT * FROM lembretes WHERE disciplinaId = :idDisciplina ORDER BY dataHora ASC")
+    fun observarPorDisciplina(idDisciplina: Long): Flow<List<Reminder>>
+
+    @Query("SELECT * FROM lembretes WHERE disciplinaId = :idDisciplina ORDER BY dataHora ASC")
     fun listarPorDisciplina(idDisciplina: Long): Flow<List<Reminder>>
+
+    @Query("SELECT * FROM lembretes WHERE dataHora >= :agora AND concluido = 0 ORDER BY dataHora ASC LIMIT 1")
+    fun proximoLembrete(agora: Long): Flow<Reminder?>
 
     @Insert suspend fun inserir(lembrete: Reminder): Long
     @Update suspend fun atualizar(lembrete: Reminder)

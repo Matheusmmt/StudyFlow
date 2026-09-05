@@ -19,7 +19,7 @@ data class FrasePost(
 )
 
 /**
- * Interface do Retrofit contendo obrigatoriamente as requisições @GET e @POST.
+ * Interface do Retrofit contendo as requisicões @GET e @POST.
  */
 interface FrasesApi {
 
@@ -32,9 +32,8 @@ interface FrasesApi {
     suspend fun enviarSugestaoFrase(@Body frase: FrasePost): FrasePost
 }
 
-/**
- * Singleton com a configuração base do Retrofit Client.
- */
+
+
 object ApiClient {
     private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
