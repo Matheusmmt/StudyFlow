@@ -80,12 +80,6 @@ Aba dedicada para monitorar a frequência:
 - Barra de progresso comparando o total de faltas com o limite máximo permitido;
 - Alertas visuais e notificações quando o limite estiver próximo ou atingido.
 
----
-
-### 🕒 Correção de Fuso Horário nas Datas (Off-by-one Fix)
-Normalização dos timestamps retornados pelo `DatePicker` do Material 3. A função `normalizarDataUtcParaLocal` recalcula a data de UTC meia-noite para o início do dia no fuso horário local do dispositivo (ex: GMT-3), evitando que o dia selecionado mude para o dia anterior ao salvar no banco ou exibir na tela.
-
----
 
 ### 🌗 Suporte Completo a Tema Claro e Escuro
 - Adapta-se automaticamente ao modo configurado no sistema Android (`isSystemInDarkTheme()`);
